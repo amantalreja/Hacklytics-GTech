@@ -1,5 +1,7 @@
+// SimilarTrendModal.js
 import React, { useState } from "react";
 import "./SimilarTrendModal.css";
+import CustomChart from "./CustomChart"; // Import the chart component
 
 const SimilarTrendModal = ({ isOpen, onClose }) => {
   const tabs = [
@@ -17,58 +19,66 @@ const SimilarTrendModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   const handleClose = () => {
-    // Trigger closing animation
     setClosing(true);
     setTimeout(() => {
-      // After animation, call onClose to remove modal
       setClosing(false);
       onClose();
     }, 300);
   };
 
-  const renderContent = () => {
-    if (selectedTab === "All Companies") {
-      return (
-        <>
-          <h3>Aggregated Data for All Companies</h3>
-          <div className="graphs-row">
-            <div className="graph">
-              <h4>Average Growth</h4>
-              <div className="graph-placeholder">Graph Placeholder</div>
-            </div>
-            <div className="graph">
-              <h4>Average Valuation</h4>
-              <div className="graph-placeholder">Graph Placeholder</div>
-            </div>
-            <div className="graph">
-              <h4>Average Revenue (Last 5 Years)</h4>
-              <div className="graph-placeholder">Graph Placeholder</div>
-            </div>
-          </div>
-        </>
-      );
-    } else {
-      return (
-        <>
-          <h3>{selectedTab} Data</h3>
-          <div className="graphs-row">
-            <div className="graph">
-              <h4>{selectedTab} Growth</h4>
-              <div className="graph-placeholder">Graph Placeholder</div>
-            </div>
-            <div className="graph">
-              <h4>{selectedTab} Valuation</h4>
-              <div className="graph-placeholder">Graph Placeholder</div>
-            </div>
-            <div className="graph">
-              <h4>{selectedTab} Revenue</h4>
-              <div className="graph-placeholder">Graph Placeholder</div>
-            </div>
-          </div>
-        </>
-      );
-    }
+  // Sample Data for Line & Bar Charts
+  const sampleData = {
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+    datasets: [
+      {
+        label: "Growth",
+        data: [15, 25, 35, 50, 65, 80],
+        borderColor: "#4F46E5",
+        backgroundColor: "rgba(79, 70, 229, 0.2)",
+        fill: false,
+        tension: 0.3,
+      },
+    ],
   };
+
+  const sampleOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: "Company Growth",
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+  };
+
+  // Dynamic Content Renderer
+  const renderContent = () => (
+    <>
+      <h3>{selectedTab} Data</h3>
+      <div className="graphs-row">
+        <div className="graph">
+          <h4>Growth</h4>
+          <CustomChart type="line" data={sampleData} options={sampleOptions} />
+        </div>
+        <div className="graph">
+          <h4>Valuation</h4>
+          <CustomChart type="bar" data={sampleData} options={sampleOptions} />
+        </div>
+        <div className="graph">
+          <h4>Revenue (Last 5 Years)</h4>
+          <CustomChart type="line" data={sampleData} options={sampleOptions} />
+        </div>
+      </div>
+    </>
+  );
 
   return (
     <div className={`overlay ${closing ? "closing" : ""}`}>
