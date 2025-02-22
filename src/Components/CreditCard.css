@@ -1,9 +1,16 @@
 #card-container {
-    width: 500px;
-    height: 270px;
+    width: 555px;
+    height: 300px;
     perspective: 1000px;
     border-radius: 10px;
+    display:inline-block;
   }
+#transactions-container{
+  min-height: 270px;
+  margin-left:200px;
+  display:inline-block;
+}
+
 
   #card {
     width: 100%;
@@ -239,4 +246,49 @@
 
   .move {
     transform: translateX(700px);
+  }
+
+
+/* TRANSACTIONSS!!!*/
+
+  .transaction {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    border-bottom: 1px solid #e0e0e0;
+    transition: background 0.3s ease;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  .transaction:hover {
+    background: #f7f7f7;
+  }
+
+  .transaction span {
+    display: inline-block;
+  }
+
+  /* Date styling */
+  .transaction-date {
+    flex: 0 0 120px;
+    color: #757575;
+    font-size: 0.9em;
+  }
+
+  /* Description styling */
+  .transaction-description {
+    flex: 1;
+    color: #424242;
+    font-size: 1em;
+    padding: 0 15px;
+  }
+
+  /* Amount styling */
+  .transaction-amount {
+    flex: 0 0 100px;
+    text-align: right;
+    font-weight: 600;
+    font-size: 1em;
+    color: #1976d2;
   }

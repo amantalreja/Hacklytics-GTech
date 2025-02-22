@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import SimilarTrendModal from "./SimilarTrendModal";
-
+import './StartupCard.css';
 const StartupCard = ({
   logo,
   name,

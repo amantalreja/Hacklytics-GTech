@@ -132,6 +132,25 @@ const CreditCard = () => {
           </div>
         </div>
       </div>
+      <div id="transactions-container">
+      <h1>Transactions</h1>
+      <div class="transaction">
+        <span class="transaction-date">2023-12-01</span>
+        <span class="transaction-description">Payment Received</span>
+        <span class="transaction-amount">$120.00</span>
+      </div>
+      <div class="transaction">
+        <span class="transaction-date">2023-11-28</span>
+        <span class="transaction-description">Subscription Fee</span>
+        <span class="transaction-amount">-$9.99</span>
+      </div>
+      <div class="transaction">
+        <span class="transaction-date">2023-11-28</span>
+        <span class="transaction-description">Subscription Fee</span>
+        <span class="transaction-amount">-$9.99</span>
+      </div>
+
+    </div>
     </div>
   );
 };
