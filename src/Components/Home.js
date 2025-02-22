@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import startupsData from "../data";
 import StartupCard from "./StartupCard";
-
+import CreditCard from "./CreditCard";
 const Home = () => {
   const [availableStartups, setAvailableStartups] = useState(startupsData);
   const [investedStartups, setInvestedStartups] = useState([]);
@@ -21,6 +21,12 @@ const Home = () => {
           <Link to="/insights">Go to Insights</Link>
         </nav>
       </header>
+      <CreditCard
+        cardNumber="1234 5678 9012 3456"
+        cardHolder="John Doe"
+        expiry="12/24"
+        cardType="MasterCard"
+      />
       <div className="content">
         {/* Available Startups */}
         <div className="column">

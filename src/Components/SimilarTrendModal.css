@@ -1,0 +1,129 @@
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    overflow: hidden; /* Prevent background scroll */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 40px;
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  .overlay.closing {
+    animation: fadeOut 0.3s ease-out forwards;
+  }
+
+  .modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 1400px;  /* Increased maximum width */
+    max-height: 95vh;   /* Increased maximum height */
+    overflow-y: auto;   /* Scroll only inside the modal */
+    background: #fff;
+    border-radius: 8px;
+    padding: 30px;      /* More padding for spacious layout */
+    box-sizing: border-box;
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  .modal-content.closing {
+    animation: fadeOut 0.3s ease-out forwards;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    font-size: 1.3rem;
+    cursor: pointer;
+  }
+
+  /* Tabs Bar */
+  .tabs {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+  }
+
+  .tab-item {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    background: #f4f4f4;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .tab-item.active {
+    background: #6200ea;
+    color: #fff;
+  }
+
+  .tab-item:not(.active):hover {
+    background: #e0e0e0;
+  }
+
+  /* Tab Content with Animation */
+  .tab-content {
+    animation: fadeIn 0.3s ease;
+  }
+
+  /* Graphs Row */
+  .graphs-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .graph {
+    flex: 1;
+    background: #f4f4f4;
+    padding: 10px;
+    border-radius: 4px;
+  }
+
+  .graph-placeholder {
+    background: #ccc;
+    height: 250px;   /* Increased height for more space */
+    border-radius: 4px;
+    margin-top: 10px;
+  }
+
+  /* Individual Graphs Grid (if needed) */
+  .individual-graphs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
