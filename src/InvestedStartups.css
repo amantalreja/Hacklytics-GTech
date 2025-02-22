@@ -1,0 +1,448 @@
+.growth-metrics {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.metrics-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.metric-box {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.metric-box h4 {
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.metric-box p {
+    margin: 10px 0 0 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.chart-container {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.chart-container h4 {
+    margin: 0 0 15px 0;
+    text-align: center;
+    color: #666;
+}
+
+@media (max-width: 768px) {
+    .metrics-summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.investment-summary {
+    background: white;
+    border-radius: 24px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.investment-summary h3 {
+    text-align: center;
+    color: #1a1a1a;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.investment-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    background: linear-gradient(145deg, #ffffff, #ffffff);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.stat-item {
+    text-align: center;
+    padding: 15px;
+    border-radius: 8px;
+    background: #f8fafc;
+    transition: transform 0.2s ease;
+}
+
+.stat-item:hover {
+    transform: translateY(-2px);
+}
+
+.stat-item h4 {
+    margin: 0 0 10px 0;
+    color: #666;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.stat-item p {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #000000;
+}
+
+.positive {
+    color: #00a854 !important;
+}
+
+.charts-container-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 30px;
+}
+
+.chart-box {
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
+}
+
+.chart-box:hover {
+    transform: translateY(-3px);
+}
+
+.chart-box h4 {
+    margin: 0 0 20px 0;
+    text-align: center;
+    color: #000000;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.custom-tooltip {
+    background: rgba(255, 255, 255, 0.98);
+    border: none;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.tooltip-year {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0 0 8px 0;
+}
+
+.tooltip-value {
+    color: #666;
+    margin: 4px 0;
+}
+
+.tooltip-growth {
+    color: #00a854;
+    font-weight: 500;
+    margin: 4px 0;
+}
+
+.tooltip-details {
+    color: #666;
+    font-style: italic;
+    margin: 4px 0 0 0;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .investment-summary {
+        padding: 15px;
+    }
+
+    .investment-stats {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .chart-box {
+        padding: 15px;
+    }
+}
+
+.pie-chart-container {
+    position: relative;
+    background: linear-gradient(145deg, #ffffff, #fafafa);
+    border-radius: 12px;
+    padding: 15px;
+}
+
+/* Text styles for the pie chart */
+.company-name {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.investment-amount {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.company-description {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.stats-text {
+    font-size: 12px;
+    fill: #666666;
+}
+
+/* Legend styles */
+.pie-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 15px;
+    padding: 12px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+
+.legend-item {
+    text-align: center;
+    padding: 15px;
+    border-radius: 8px;
+    background: white;
+    transition: transform 0.2s ease;
+}
+
+.legend-item:hover {
+    transform: translateY(-2px);
+}
+
+.legend-item h4 {
+    margin: 0 0 10px 0;
+    color: #666;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.legend-item p {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+.legend-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.legend-label {
+    font-weight: 500;
+    color: #333;
+    font-size: 14px;
+}
+
+.legend-value {
+    color: #666;
+    font-size: 14px;
+}
+
+/* Animation for hover effects */
+@keyframes fadeIn {
+    from { opacity: 0.7; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+    from { transform: scale(0.98); }
+    to { transform: scale(1); }
+}
+
+.pie-chart-container {
+    animation: fadeIn 0.3s ease-out, scaleUp 0.3s ease-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .investment-summary {
+        padding: 15px;
+    }
+
+    .pie-legend {
+        padding: 8px;
+    }
+
+    .legend-item {
+        padding: 6px 10px;
+    }
+}
+
+.startup-list {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 30px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.startup-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.startup-item:last-child {
+    border-bottom: none;
+}
+
+.startup-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.color-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.startup-name {
+    font-size: 20px;
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.startup-value {
+    font-size: 20px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.company-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.company-stat {
+    background: #f8fafc;
+    padding: 24px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.company-stat h4 {
+    color: #6b7280;
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0 0 12px 0;
+}
+
+.company-stat p {
+    color: #1f2937;
+    font-size: 32px;
+    font-weight: 600;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .company-list {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+.company-blocks {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    width: 100%;
+    margin-top: 40px;
+}
+
+.company-block {
+    background: #f8fafc;
+    padding: 24px;
+    border-radius: 12px;
+    text-align: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.company-block:hover {
+    transform: scale(1.05);
+    background: #f8fafc;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.company-name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 16px;
+    color: #6b7280;
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+
+.company-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.company-value {
+    font-size: 24px;
+    color: #1f2937;
+    font-weight: 600;
+    margin: 0;
+}
+
+@media (max-width: 1024px) {
+    .company-blocks {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .company-blocks {
+        grid-template-columns: 1fr;
+    }
+}
