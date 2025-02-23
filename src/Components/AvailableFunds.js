@@ -6,7 +6,7 @@ const AvailableFunds = () => {
   // Sample metric values; you can replace these with dynamic data.
   const cashbackEarned = "$350";
   const cashbackGrowth = "8%";
-  const investedPastYear = "$50,000";
+  const investedPastYear = "$5000";
   const investedGrowth = "12%";
   const incubatorVisits = 12;
   const visitsGrowth = "5%";

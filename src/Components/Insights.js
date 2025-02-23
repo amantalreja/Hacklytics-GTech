@@ -186,7 +186,7 @@ const Insights = () => {
 
   // a) Sign-Up Growth Chart (unchanged)
   const signupsChartData = {
-    labels: YEARS.map((y) => `Yr ${y}`),
+    labels: YEARS.map((y) => `Year ${y}`),
     datasets: [
       {
         label: "Savor One (Monthly Sign-Ups)",
@@ -231,7 +231,7 @@ const Insights = () => {
 
     if (showTotalLine) {
       datasets.push({
-        label: "Total Investment in Startups (4 yrs)",
+        label: "Total Investment in Startups (4 Years)",
         data: totalLineDataset,
         borderColor: "#FF0000",
         backgroundColor: "rgba(255, 0, 0, 0.2)",
@@ -241,7 +241,7 @@ const Insights = () => {
     }
 
     return {
-      labels: YEARS.map((y) => `Yr ${y}`),
+      labels: YEARS.map((y) => `Year ${y}`),
       datasets,
     };
   }, [
@@ -257,7 +257,7 @@ const Insights = () => {
     labels: ["Savor One", "Venture Studio"],
     datasets: [
       {
-        label: "Cost per User (4 yrs)",
+        label: "Cost per User (4 Years)",
         data: [savorOneCostPerUser, ventureStudioCostPerUser],
         backgroundColor: [
           "rgba(238, 66, 102, 0.7)",
@@ -271,8 +271,8 @@ const Insights = () => {
   const pieLabels = [];
   const pieData = [];
   for (let year = 1; year <= 4; year++) {
-    pieLabels.push(`Yr ${year} Savor One`);
-    pieLabels.push(`Yr ${year} Venture Studio`);
+    pieLabels.push(`Year ${year} Savor One`);
+    pieLabels.push(`Year ${year} Venture Studio`);
     pieData.push(savorOneSignupsData[year]);
     pieData.push(ventureStudioSignupsData[year]);
   }
@@ -311,7 +311,7 @@ const Insights = () => {
   return (
     <div className="container">
       <header>
-        <h1>Investment Insights</h1>
+        <h1>Capital One Investment Insights</h1>
         <nav>
           <Link to="/">Back to Home</Link>
         </nav>
@@ -325,8 +325,6 @@ const Insights = () => {
           zIndex: 999,
           backgroundColor: "#fff",
           padding: "1rem 0",
-          marginBottom: "1rem",
-          borderBottom: "1px solid #ccc",
         }}
       >
         <div className="input-row">
@@ -382,12 +380,13 @@ const Insights = () => {
       <div className="comparison-section">
         {/* Capital One Savor One */}
         <div className="comparison-card">
+        <img src={require("../savorone.png")} alt="Savor One" width={330}/>
           <div className="card-header">
             <h3>Capital One Savor One</h3>
           </div>
           <div className="comparison-data">
             <div className="comparison-item">
-              <span>Monthly Sign-Ups (Yr1):</span>
+              <span>Monthly Sign-Ups (Year1):</span>
               <span className="comparison-value">
                 {savorOneSignupsData[1].toLocaleString("en-US")}
               </span>
@@ -409,7 +408,7 @@ const Insights = () => {
               </span>
             </div>
             <div className="comparison-item">
-              <span>Spending-Based Cost (4 yrs):</span>
+              <span>Spending-Based Cost (4 Years):</span>
               <span className="comparison-value">
                 $
                 {savorOneSpendingCost.toLocaleString("en-US", {
@@ -419,7 +418,7 @@ const Insights = () => {
               </span>
             </div>
             <div className="comparison-item">
-              <span>Total Cost (4 yrs):</span>
+              <span>Total Cost (4 Years):</span>
               <span className="comparison-value">
                 $
                 {savorOneCostPerUser.toLocaleString("en-US", {
@@ -433,12 +432,18 @@ const Insights = () => {
 
         {/* Capital One Venture Studio */}
         <div className="comparison-card">
+        <img
+          src={require("../VentureStudio.png")}
+          alt="VentureStudio"
+          width={400}
+          style={{ border: "0px solid #6c63ff", borderRadius: "10px" }}
+        />
           <div className="card-header">
             <h3>Capital One Venture Studio</h3>
           </div>
           <div className="comparison-data">
             <div className="comparison-item">
-              <span>Monthly Sign-Ups (Yr1):</span>
+              <span>Monthly Sign-Ups (Year1):</span>
               <span className="comparison-value">
                 {ventureStudioSignupsData[1].toLocaleString("en-US")}
               </span>
@@ -450,7 +455,7 @@ const Insights = () => {
               </span>
             </div>
             <div className="comparison-item">
-              <span>Bonus Future Value (4 yrs):</span>
+              <span>Bonus Future Value (4 Years):</span>
               <span className="comparison-value">
                 $
                 {bonusInvestmentFutureValue.toLocaleString("en-US", {
@@ -460,7 +465,7 @@ const Insights = () => {
               </span>
             </div>
             <div className="comparison-item">
-              <span>Net Cost (4 yrs):</span>
+              <span>Net Cost (4 Years):</span>
               <span className="comparison-value">
                 $
                 {ventureStudioCostPerUser.toLocaleString("en-US", {
@@ -480,7 +485,7 @@ const Insights = () => {
               </span>
             </div>
             <div className="comparison-item">
-              <span>Total Investment in Startups (4 yrs):</span>
+              <span>Total Investment in Startups (4 Years):</span>
               <span className="comparison-value">
                 $
                 {totalInvestment.toLocaleString("en-US", {
