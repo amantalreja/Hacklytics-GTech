@@ -52,13 +52,7 @@ const Home = () => {
           <Link to="/insights">Go to Insights</Link>
         </nav>
       </header>
-
-      <CreditCard
-        cardNumber="1234 5678 9012 3456"
-        cardHolder="John Doe"
-        expiry="12/24"
-        cardType="MasterCard"
-      />
+      <CreditCard/>
 
       <div className="content">
         {/* Available Startups Column */}

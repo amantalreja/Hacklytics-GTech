@@ -11,6 +11,7 @@ const Root = () => {
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/insights" element={<Insights />} />
+        <Route path="/CapitalOne" element={<Insights />} />
       </Routes>
     </Router>
   );
