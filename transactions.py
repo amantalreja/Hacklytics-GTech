@@ -1,7 +1,11 @@
 import stripe
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Set your Stripe test secret key
-stripe.api_key = "sk_test_51QvakvQlH98mgcGU4OCyCsIDsXcZf4IgnV246K2Sxu9ITFWLRQPxSj5IJskpljGyDYw8GdmIP3YEnlTpm2C4R5QV002Vrw33bj"
+stripe.api_key = os.getenv("STRIPE_API_KEY")
 
 # Step 1: Create a test customer
 def create_test_customer():

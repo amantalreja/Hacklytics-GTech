@@ -40,7 +40,7 @@ market differentiation, business model, growth strategy, and key achievements: {
     return response.model_dump_json(indent=2)
 
 async def main():
-    video_path = "/Users/mahektalreja/Downloads/videoplayback.mp4"  # Your video file path
+    video_path = "./videoplayback.mp4"  # Your video file path
     transcription = transcribe_video(video_path)  # Transcribe the video
 
     # Get the summarized text
