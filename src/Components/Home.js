@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import startupsData from "../data";
+import fetchStartupsData from "../data"; // Now this returns a promise with DynamoDB data
 import StartupCard from "./StartupCard";
 import CreditCard from "./CreditCard";
 import InvestedStartups from "./InvestedStartups";
-import "./InvestedStartups.css"; // Ensure this CSS is imported
+import { addStartup } from "./dynamoOperations"; // Unused in this snippet, but still imported if needed
+import "./InvestedStartups.css";
+import Header from "./Header";
 
 const Home = () => {
   // Example invested startups data (initially set)
@@ -33,27 +35,43 @@ const Home = () => {
     }
   ];
 
-  const [availableStartups, setAvailableStartups] = useState(startupsData);
+  const [availableStartups, setAvailableStartups] = useState([]);
   const [investedStartups, setInvestedStartups] = useState(exampleInvestedStartups);
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchStartupsData();
+        setAvailableStartups(data);
+      } catch (error) {
+        console.error("Error fetching startups data:", error);
+        setMessage("Error fetching startups data.");
+      }
+    };
+    fetchData();
+  }, []);
 
   const investInStartup = (id) => {
-    const selectedStartup = availableStartups.find((s) => s.id === id);
+    const selectedStartup = availableStartups.find(
+      (s) => s.id === id || s.startupName === id
+    );
     if (selectedStartup) {
       setInvestedStartups([...investedStartups, selectedStartup]);
-      setAvailableStartups(availableStartups.filter((s) => s.id !== id));
+      setAvailableStartups(
+        availableStartups.filter(
+          (s) => s.id !== id && s.startupName !== id
+        )
+      );
+      setMessage(`Successfully invested in ${selectedStartup.name || selectedStartup.startupName}`);
     }
   };
 
   return (
     <div className="container">
-      <header>
-        <h1>Hackalytics - Startup Investment</h1>
-        <nav>
-          <Link to="/insights">Go to Insights</Link>
-        </nav>
-      </header>
-      <CreditCard/>
-
+      <Header/>
+      <CreditCard />
+      {message && <p style={{ color: "green" }}>{message}</p>}
       <div className="content">
         {/* Available Startups Column */}
         <div className="column">
@@ -61,16 +79,18 @@ const Home = () => {
           {availableStartups.length > 0 ? (
             availableStartups.map((startup) => (
               <StartupCard
-                key={startup.id}
-                logo={startup.logo}
-                name={startup.name}
-                description={startup.description}
-                goal={startup.goal}
-                invested={startup.invested}
-                stake={startup.stake}
-                totalUsers={startup.totalUsers}
-                team={startup.team}
-                onInvest={() => investInStartup(startup.id)}
+                key={startup.id || startup.startupName}
+                logo={startup.logoURL || startup.logo}
+                name={startup.startupName || startup.name}
+                description={startup.bio || startup.description}
+                goal={startup.targetInvestment || startup.goal}
+                invested={startup.totalInvested || startup.invested}
+                stake={startup.capitalOneStake || startup.stake}
+                totalUsers={startup.totalUsersInvesting || startup.totalUsers}
+                team={startup.teamMembers || startup.team}
+                onInvest={() =>
+                  investInStartup(startup.id || startup.startupName)
+                }
                 investedStatus={false}
               />
             ))
@@ -81,7 +101,6 @@ const Home = () => {
 
         {/* Already Invested Column */}
         <div className="column">
-          <h2>Already Invested</h2>
           {investedStartups.length > 0 ? (
             <InvestedStartups investedStartups={investedStartups} />
           ) : (

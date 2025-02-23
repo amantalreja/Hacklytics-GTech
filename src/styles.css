@@ -86,3 +86,37 @@ header nav a {
 header nav a:hover {
   color: #e2d3f8; /* Slightly lighter on hover */
 }
+
+.thank-you-banner {
+  background: linear-gradient(90deg, #1a1f36, #28344e); /* Subtle Deep Blue Gradient */
+  color: #e0e0e0; /* Soft White for Readability */
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-align: center;
+  padding: 12px 18px;
+  border-radius: 8px;
+  margin: 15px auto;
+  max-width: 70%;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  letter-spacing: 0.4px;
+  animation: fadeIn 0.8s ease-in-out;
+  transition: all 0.3s ease;
+}
+
+/* Hover Effect - Slight Lighten */
+.thank-you-banner:hover {
+  background: linear-gradient(90deg, #20283e, #32425c);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Smooth Fade-In */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

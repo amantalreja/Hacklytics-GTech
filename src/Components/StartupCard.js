@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import SimilarTrendModal from "./SimilarTrendModal";
-import './StartupCard.css';
+import InvestmentPopup from "./InvestmentPopup"; // New Component
+import "./StartupCard.css";
+
 const StartupCard = ({
   logo,
   name,
@@ -11,9 +13,10 @@ const StartupCard = ({
   totalUsers,
   team,
   onInvest,
-  investedStatus // true if already invested
+  investedStatus
 }) => {
   const [showTrendModal, setShowTrendModal] = useState(false);
+  const [showInvestmentPopup, setShowInvestmentPopup] = useState(false);
   const progress = Math.min((invested / goal) * 100, 100);
 
   return (
@@ -26,12 +29,7 @@ const StartupCard = ({
           <div className="team-avatars">
             {team &&
               team.map((url, index) => (
-                <img
-                  key={index}
-                  src={url}
-                  alt="team member"
-                  className="team-avatar"
-                />
+                <img key={index} src={url} alt="team member" className="team-avatar" />
               ))}
           </div>
         </div>
@@ -39,45 +37,50 @@ const StartupCard = ({
         {/* Description */}
         <p className="startup-description">{description}</p>
 
-        {/* Progress Bar */}
-        <div className="progress-bar">
-          <div className="progress-fill" style={{ width: `${progress}%` }}></div>
+        {/* Progress Bar & Goal Amount */}
+        <div className="progress-container">
+          <div className="progress-bar">
+            <div className="progress-fill" style={{ width: `${progress}%` }}>
+            </div>
+          </div>
+          <p className="progress-text">
+            <strong>${invested.toLocaleString()}</strong> of <strong>${goal.toLocaleString()}</strong> invested
+          </p>
         </div>
 
         {/* Investment Details */}
         <div className="investment-details">
-          <span>
-            <strong>Total Invested:</strong> ${invested.toLocaleString()}
-          </span>
-          <span>
-            <strong>CapitalOne Stake:</strong> {stake}
-          </span>
-          <span>
-            <strong>Total Users:</strong> {totalUsers}
-          </span>
+          <span><strong>Total Invested:</strong> ${invested.toLocaleString()}</span>
+          <span><strong>CapitalOne Stake:</strong> {stake}</span>
+          <span><strong>Total Users:</strong> {totalUsers}</span>
         </div>
 
         {/* Buttons */}
         <div className="button-row">
           {!investedStatus && onInvest && (
-            <button className="invest-button" onClick={onInvest}>
+            <button className="invest-button" onClick={() => setShowInvestmentPopup(true)}>
               Invest
             </button>
           )}
-          <button
-            className="trend-button"
-            onClick={() => setShowTrendModal(true)}
-          >
+          <button className="trend-button" onClick={() => setShowTrendModal(true)}>
             Similar Startup Trend
           </button>
         </div>
       </div>
 
-      {/* Modal Overlay */}
-      <SimilarTrendModal
-        isOpen={showTrendModal}
-        onClose={() => setShowTrendModal(false)}
+      {/* Investment Modal */}
+      <InvestmentPopup
+        isOpen={showInvestmentPopup}
+        onClose={() => setShowInvestmentPopup(false)}
+        onConfirm={(amount) => {
+          onInvest(amount);
+          setShowInvestmentPopup(false);
+        }}
+        goal={goal}
       />
+
+      {/* Similar Trend Modal */}
+      <SimilarTrendModal isOpen={showTrendModal} onClose={() => setShowTrendModal(false)} />
     </>
   );
 };

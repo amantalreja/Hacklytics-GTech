@@ -1,0 +1,128 @@
+/* Full-screen overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 10, 50, 0.8); /* Deep blue tint */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1100;
+  }
+
+  /* Popup container */
+  .pitch-popup {
+    background: #fff;
+    padding: 20px 30px;           /* Reduced padding */
+    border-radius: 12px;
+    width: 700px;                 /* Wider popup */
+    max-width: 95%;
+    max-height: 80vh;             /* Limits vertical height */
+    overflow-y: auto;             /* Scroll if content overflows */
+    position: relative;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.4s ease-in-out;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  /* Close button */
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    color: #444;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  .close-btn:hover {
+    color: #e67e22; /* Warm orange accent */
+  }
+
+  /* Form styles */
+  .pitch-popup form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .pitch-popup h2 {
+    color: #102a43; /* Dark blue for a professional header */
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .pitch-popup label {
+    font-weight: 600;
+    color: #102a43;
+    margin-bottom: 5px;
+  }
+
+  /* Input row: multiple inputs in one row */
+  .input-row {
+    display: flex;
+    gap: 20px;
+  }
+  .input-row > div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Inputs and textareas */
+  .pitch-popup input,
+  .pitch-popup textarea {
+    padding: 10px;
+    border: 1px solid #dfe6ed;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    width: 100%;
+    transition: border-color 0.3s ease;
+  }
+  .pitch-popup input:focus,
+  .pitch-popup textarea:focus {
+    outline: none;
+    border-color: #e67e22; /* Warm accent */
+  }
+  .pitch-popup textarea {
+    resize: vertical;
+    min-height: 80px;  /* Smaller textarea height */
+  }
+
+  /* Submit button */
+  .pitch-popup button[type="submit"] {
+    background: linear-gradient(45deg, #102a43, #1a73e8); /* Deep blue to bright blue */
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s ease;
+  }
+  .pitch-popup button[type="submit"]:hover {
+    background: linear-gradient(45deg, #1a73e8, #e67e22); /* Transition to warm accent */
+  }
+
+  /* Error message */
+  .error-message {
+    color: #e74c3c;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  /* Fade-in animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
