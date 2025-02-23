@@ -1,5 +1,5 @@
-// SimilarTrendModal_v2.js
-import React, { useState } from "react";
+// SimilarTrendModal_v3.js
+import React, { useState, useEffect, useMemo } from "react";
 import { Line, Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -26,7 +26,7 @@ ChartJS.register(
   Legend
 );
 
-// External Tooltip Handlers (same as v1)
+// External Tooltip Handlers (unchanged)
 function externalLineTooltipHandler(context) {
   const { chart, tooltip } = context;
   let tooltipEl = chart.canvas.parentNode.querySelector("div.line-tooltip");
@@ -88,7 +88,8 @@ function externalLineTooltipHandler(context) {
       percentChange = (Math.abs(diff) / Math.abs(previousValue)) * 100;
     }
     const percentStr = percentChange === Infinity ? "∞" : percentChange.toFixed(2);
-    let arrowColor = arrow === "↑" || sign === "+" ? "limegreen" : arrow === "↓" || sign === "-" ? "red" : "#fff";
+    let arrowColor =
+      arrow === "↑" || sign === "+" ? "limegreen" : arrow === "↓" || sign === "-" ? "red" : "#fff";
 
     line3 = `
       <div style="color:#fff;">
@@ -149,7 +150,7 @@ function externalBarTooltipHandler(context) {
   tooltipEl.innerHTML = line1 + line2 + line3;
 }
 
-const SimilarTrendModal_v2 = ({ isOpen, onClose }) => {
+const SimilarTrendModal_v3 = ({ isOpen, onClose }) => {
   const tabs = [
     "All Companies",
     "OpenAI",
@@ -161,6 +162,100 @@ const SimilarTrendModal_v2 = ({ isOpen, onClose }) => {
   ];
   const [selectedTab, setSelectedTab] = useState("All Companies");
   const [closing, setClosing] = useState(false);
+
+  // Initial fallback data (in case API calls fail)
+  const [chartData, setChartData] = useState({
+    revenueData: {
+      OpenAI: [0.0, 0.02, 0.20, 1.30, 3.70],
+      SpaceX: [2.0, 2.60, 4.60, 5.40, 9.00],
+      Stripe: [7.40, 9.00, 12.00, 17.40, 20.00],
+      "Scale AI": [0.05, 0.10, 0.29, 0.76, 1.00],
+      Moneyview: [0.02, 0.03, 0.05, 0.07, 0.12],
+      Rapido: [0.01, 0.02, 0.03, 0.045, 0.075],
+    },
+    valuationData: {
+      OpenAI: [14, 14, 29, 80, 157],
+      SpaceX: [100, 110, 137, 210, 350],
+      Stripe: [36, 95, 95, 50, 65],
+      "Scale AI": [3.5, 7.0, 7.3, 7.3, 13.8],
+      Moneyview: [0.3, 0.6, 0.8, 0.9, 1.2],
+      Rapido: [0.2, 0.3, 0.5, 0.83, 1.0],
+    },
+    growthData: {
+      OpenAI: 300,
+      SpaceX: 30,
+      Stripe: 20,
+      "Scale AI": 70,
+      Moneyview: 50,
+      Rapido: 40,
+    },
+  });
+
+  // Define startupTickerMapping using useMemo to keep it stable
+  const startupTickerMapping = useMemo(() => ({
+    OpenAI: "AAPL",
+    SpaceX: "MSFT",
+    Stripe: "GOOGL",
+    "Scale AI": "AMZN",
+    Moneyview: "META", // Facebook/Meta
+    Rapido: "TSLA",
+  }), []);
+
+  // Fetch updated data from Financial Modeling Prep for each ticker
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const promises = Object.entries(startupTickerMapping).map(
+          async ([startup, ticker]) => {
+            const response = await fetch(
+              `https://financialmodelingprep.com/api/v3/financials/income-statement/${ticker}?apikey=demo`
+            );
+            const json = await response.json();
+            // Use the first 5 entries (most recent 5 years) and reverse for ascending order
+            const financials = json.financials.slice(0, 5).reverse();
+            // Extract revenue in billions
+            const revenue = financials.map((item) => parseFloat(item["Revenue"]) / 1e9);
+            return { startup, revenue };
+          }
+        );
+        const results = await Promise.all(promises);
+        const newRevenueData = {};
+        results.forEach(({ startup, revenue }) => {
+          newRevenueData[startup] = revenue;
+        });
+        // Build valuationData using multipliers
+        const newValuationData = {};
+        Object.entries(newRevenueData).forEach(([startup, revenue]) => {
+          let multiplier = 10;
+          if (startup === "SpaceX") multiplier = 15;
+          else if (startup === "Stripe") multiplier = 12;
+          else if (startup === "Scale AI") multiplier = 8;
+          else if (startup === "Moneyview") multiplier = 3;
+          else if (startup === "Rapido") multiplier = 2;
+          newValuationData[startup] = revenue.map((val) => val * multiplier);
+        });
+        const newGrowthData = {
+          OpenAI: 300,
+          SpaceX: 30,
+          Stripe: 20,
+          "Scale AI": 70,
+          Moneyview: 50,
+          Rapido: 40,
+        };
+
+        setChartData({
+          revenueData: newRevenueData,
+          valuationData: newValuationData,
+          growthData: newGrowthData,
+        });
+      } catch (error) {
+        console.error("Error fetching real-time data:", error);
+      }
+    }
+    fetchData();
+    const interval = setInterval(fetchData, 60000);
+    return () => clearInterval(interval);
+  }, [startupTickerMapping]);
 
   if (!isOpen) return null;
 
@@ -174,33 +269,7 @@ const SimilarTrendModal_v2 = ({ isOpen, onClose }) => {
 
   // ---------------- DATA SETS ----------------
   const years = [2020, 2021, 2022, 2023, 2024];
-
-  const revenueData = {
-    OpenAI: [0.0, 0.02, 0.20, 1.30, 3.70],
-    SpaceX: [2.0, 2.60, 4.60, 5.40, 9.00],
-    Stripe: [7.40, 9.00, 12.00, 17.40, 20.00],
-    "Scale AI": [0.05, 0.10, 0.29, 0.76, 1.00],
-    Moneyview: [0.02, 0.03, 0.05, 0.07, 0.12],
-    Rapido: [0.01, 0.02, 0.03, 0.045, 0.075],
-  };
-
-  const valuationData = {
-    OpenAI: [14, 14, 29, 80, 157],
-    SpaceX: [100, 110, 137, 210, 350],
-    Stripe: [36, 95, 95, 50, 65],
-    "Scale AI": [3.5, 7.0, 7.3, 7.3, 13.8],
-    Moneyview: [0.3, 0.6, 0.8, 0.9, 1.2],
-    Rapido: [0.2, 0.3, 0.5, 0.83, 1.0],
-  };
-
-  const growthData = {
-    OpenAI: 300,
-    SpaceX: 30,
-    Stripe: 20,
-    "Scale AI": 70,
-    Moneyview: 50,
-    Rapido: 40,
-  };
+  const { revenueData, valuationData, growthData } = chartData;
 
   const colorMap = {
     OpenAI: "rgba(255, 99, 132, 1)",
@@ -211,7 +280,7 @@ const SimilarTrendModal_v2 = ({ isOpen, onClose }) => {
     Rapido: "rgba(255, 159, 64, 1)",
   };
 
-  // Helper to filter data if a specific company is selected
+  // Helper: Filter data based on selectedTab
   const filterData = (dataObj) => {
     if (selectedTab === "All Companies") return dataObj;
     return Object.keys(dataObj)
@@ -233,71 +302,34 @@ const SimilarTrendModal_v2 = ({ isOpen, onClose }) => {
       tension: 0.1,
     }));
 
-  // Create line chart options with maintainAspectRatio disabled
+  // Chart options with maintainAspectRatio disabled
   const createLineChartOptions = (titleText) => ({
     responsive: true,
-    maintainAspectRatio: false, // Allows custom height
-    interaction: {
-      mode: "nearest",
-      intersect: true,
-    },
+    maintainAspectRatio: false,
+    interaction: { mode: "nearest", intersect: true },
     plugins: {
-      title: {
-        display: true,
-        text: titleText,
-      },
-      tooltip: {
-        enabled: false,
-        external: externalLineTooltipHandler,
-      },
+      title: { display: true, text: titleText },
+      tooltip: { enabled: false, external: externalLineTooltipHandler },
     },
-    elements: {
-      point: {
-        radius: 4,
-        hoverRadius: 8,
-        hitRadius: 20,
-      },
-    },
-    scales: {
-      y: {
-        beginAtZero: true,
-      },
-    },
+    elements: { point: { radius: 4, hoverRadius: 8, hitRadius: 20 } },
+    scales: { y: { beginAtZero: true } },
   });
 
-  // Create bar chart options with maintainAspectRatio disabled
   const createBarChartOptions = (titleText) => ({
     responsive: true,
-    maintainAspectRatio: false, // Allows custom height
-    interaction: {
-      mode: "nearest",
-      intersect: true,
-    },
+    maintainAspectRatio: false,
+    interaction: { mode: "nearest", intersect: true },
     plugins: {
-      title: {
-        display: true,
-        text: titleText,
-      },
-      legend: {
-        display: false,
-      },
-      tooltip: {
-        enabled: false,
-        external: externalBarTooltipHandler,
-      },
+      title: { display: true, text: titleText },
+      legend: { display: false },
+      tooltip: { enabled: false, external: externalBarTooltipHandler },
     },
-    scales: {
-      y: {
-        beginAtZero: true,
-      },
-    },
+    scales: { y: { beginAtZero: true } },
   });
 
-  // Filter data based on selected tab
   const filteredRevenueData = filterData(revenueData);
   const filteredValuationData = filterData(valuationData);
 
-  // Build chart data
   const revenueChartData = {
     labels: years,
     datasets: prepareLineDatasets(filteredRevenueData),
@@ -328,9 +360,7 @@ const SimilarTrendModal_v2 = ({ isOpen, onClose }) => {
       },
     ],
   };
-  const growthChartOptions = createBarChartOptions(
-    "Average Annual Revenue Growth"
-  );
+  const growthChartOptions = createBarChartOptions("Average Annual Revenue Growth");
 
   return (
     <div className={`overlay ${closing ? "closing" : ""}`}>
@@ -352,12 +382,6 @@ const SimilarTrendModal_v2 = ({ isOpen, onClose }) => {
         </div>
         <div className="tab-content">
           <h3>{selectedTab} Data</h3>
-
-          {/* 
-            Use a grid to display the charts side by side.
-            Each chart container now has a fixed height (e.g., 400px).
-            maintainAspectRatio: false ensures the charts fill that height.
-          */}
           <div
             className="chart-grid"
             style={{
@@ -367,25 +391,21 @@ const SimilarTrendModal_v2 = ({ isOpen, onClose }) => {
               marginTop: "1rem",
             }}
           >
-            {/* Chart 1: Revenue */}
             <div
               className="chart-container"
               style={{
                 background: "#f0f0f0",
                 padding: "1rem",
-                height: "400px", // Increase or decrease as needed
+                height: "400px",
                 display: "flex",
                 flexDirection: "column",
               }}
             >
               <h4 style={{ textAlign: "center" }}>Annual Revenue (2020–2024)</h4>
-              {/* A wrapper with flex: 1 ensures the chart fills remaining space */}
               <div style={{ flex: 1 }}>
                 <Line data={revenueChartData} options={revenueChartOptions} />
               </div>
             </div>
-
-            {/* Chart 2: Valuation */}
             <div
               className="chart-container"
               style={{
@@ -401,8 +421,6 @@ const SimilarTrendModal_v2 = ({ isOpen, onClose }) => {
                 <Line data={valuationChartData} options={valuationChartOptions} />
               </div>
             </div>
-
-            {/* Chart 3: Growth */}
             <div
               className="chart-container"
               style={{
@@ -425,4 +443,4 @@ const SimilarTrendModal_v2 = ({ isOpen, onClose }) => {
   );
 };
 
-export default SimilarTrendModal_v2;
+export default SimilarTrendModal_v3;
