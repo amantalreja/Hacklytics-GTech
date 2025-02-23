@@ -40,8 +40,7 @@ const StartupCard = ({
         {/* Progress Bar & Goal Amount */}
         <div className="progress-container">
           <div className="progress-bar">
-            <div className="progress-fill" style={{ width: `${progress}%` }}>
-            </div>
+            <div className="progress-fill" style={{ width: `${progress}%` }} />
           </div>
           <p className="progress-text">
             <strong>${invested.toLocaleString()}</strong> of <strong>${goal.toLocaleString()}</strong> invested
@@ -77,6 +76,7 @@ const StartupCard = ({
           setShowInvestmentPopup(false);
         }}
         goal={goal}
+        startupName={name}  // Passing startup name as key per your schema.
       />
 
       {/* Similar Trend Modal */}

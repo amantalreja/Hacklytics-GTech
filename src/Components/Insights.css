@@ -1,164 +1,138 @@
-/* Example root variables (if not already defined) */
-:root {
-    --card-radius: 10px;
-    --card-border: #ddd;
-    --text-color: #333;
-    --primary-color: #2176BD;
-    --secondary-bg: #f8f8f8;
-  }
+/* Input Row */
+.input-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  background: #fff;
+  padding: 1.2rem;
+  border-radius: var(--card-radius);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 2rem;
+}
 
-  /* Container */
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1.5rem;
-    /* If you want a subtle background, uncomment:
-    background: var(--secondary-bg);
-    */
-  }
+.input-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 180px;
+}
 
-  /* Input Row */
+.input-group label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+}
+
+.input-group input {
+  padding: 0.7rem;
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-group input:focus {
+  border-color: var(--primary-color);
+}
+
+/* Comparison Section */
+.comparison-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  justify-content: space-between;
+}
+
+/* Individual Comparison Card */
+.comparison-card {
+  flex: 1;
+  background: #fff;
+  border-radius: var(--card-radius);
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease-in-out;
+  min-width: 280px;
+}
+
+.comparison-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Card Header */
+.card-header {
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid var(--card-border);
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.card-header h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--primary-color);
+}
+
+/* Comparison Data Section */
+.comparison-data {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.comparison-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.comparison-item span {
+  margin-left: 0.5rem;
+}
+
+.comparison-value {
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+/* Chart Container */
+.charts-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.chart-container {
+  flex: 1;
+  min-width: 280px;
+  background: #fff;
+  border-radius: var(--card-radius);
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
   .input-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.2rem;
-    background: #fff;
-    padding: 1.2rem;
-    border-radius: var(--card-radius);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
-    margin-bottom: 2rem;
+      flex-direction: column;
   }
 
-  .input-group {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-width: 180px; /* ensures reasonable width on smaller screens */
-  }
-
-  .input-group label {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: var(--text-color);
-  }
-
-  .input-group input {
-    padding: 0.7rem;
-    border: 1px solid var(--card-border);
-    border-radius: 6px;
-    font-size: 1rem;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-
-  .input-group input:focus {
-    border-color: var(--primary-color);
-  }
-
-  /* Comparison Section */
   .comparison-section {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    margin-top: 2rem;
-    justify-content: space-between;
+      flex-direction: column;
   }
 
-  /* Individual Comparison Card */
   .comparison-card {
-    flex: 1;
-    background: #fff;
-    border-radius: var(--card-radius);
-    padding: 1.5rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-    transition: transform 0.2s ease-in-out;
-    min-width: 280px; /* helps cards on small screens */
-  }
-
-  .comparison-card:hover {
-    transform: translateY(-4px);
-  }
-
-  /* Card Header */
-  .card-header {
-    display: flex;
-    align-items: center;
-    border-bottom: 2px solid var(--card-border);
-    padding-bottom: 0.75rem;
-    margin-bottom: 1rem;
-  }
-
-  .card-header h3 {
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin: 0;
-    color: var(--primary-color);
-  }
-
-  /* Comparison Data Section */
-  .comparison-data {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .comparison-item {
-    display: flex;
-    justify-content: space-between;
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--text-color);
-  }
-
-  .comparison-item span {
-    margin-left: 0.5rem;
-  }
-
-  .comparison-value {
-    font-weight: 700;
-    color: var(--primary-color);
-  }
-
-  /* (Optional) Chart Container if you want to reintroduce graphs */
-  .charts-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    margin-top: 2rem;
-  }
-
-  .chart-container {
-    flex: 1;
-    min-width: 280px;
-    background: #fff;
-    border-radius: var(--card-radius);
-    padding: 1.5rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  }
-
-  .chart-container h3 {
-    text-align: center;
-    margin-bottom: 1rem;
-    font-weight: 600;
-    color: var(--text-color);
-  }
-
-  /* Responsive Adjustments */
-  @media (max-width: 768px) {
-    .input-row {
-      flex-direction: column;
-    }
-
-    .comparison-section {
-      flex-direction: column;
-    }
-
-    .comparison-card {
       margin: 0 auto;
       width: 100%;
-    }
-
-    .charts-row {
-      flex-direction: column;
-    }
   }
+
+  .charts-row {
+      flex-direction: column;
+  }
+}

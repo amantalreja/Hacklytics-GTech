@@ -1,0 +1,66 @@
+#available-funds {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  #available-funds h2 {
+    margin-top: 0;
+    color: #102a43;
+    font-size: 1.7em;
+    font-weight: bold;
+    margin-bottom: 15px;
+    transition: color 0.3s ease;
+  }
+
+  #available-funds h2:hover {
+    color: #1a73e8;
+  }
+
+  #available-funds ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  #available-funds li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1em;
+    color: #424242;
+    padding: 8px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+
+  #available-funds li:hover {
+    background: rgba(26, 115, 232, 0.1); /* light blue hover background */
+    transform: scale(1.02);
+  }
+
+  #available-funds li strong {
+    color: #1a73e8;
+  }
+
+  /* Growth indicator styling */
+  #available-funds li .growth {
+    display: inline-flex;
+    align-items: center;
+    color: green;
+    font-size: 1.2em;
+    font-weight: bold;
+    transition: color 0.3s ease;
+  }
+
+  #available-funds li .growth::before {
+    content: "▲"; /* Up arrow icon */
+    margin-right: 5px;
+  }
+
+  #available-funds li .growth:hover {
+    color: darkgreen;
+  }

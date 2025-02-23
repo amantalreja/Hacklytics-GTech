@@ -9,7 +9,7 @@ const Header = () => {
 
   return (
     <header>
-      <h1>Hackalytics - Startup Investment</h1>
+      <h1>VentureSeed: Enabling MicroInvestors</h1>
       <nav>
         <button onClick={() => setIsPitchOpen(true)} className="nav-btn">
           Pitch Your Startup

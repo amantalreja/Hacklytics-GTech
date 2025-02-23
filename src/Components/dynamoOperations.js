@@ -1,4 +1,4 @@
-import { PutCommand, GetCommand } from "@aws-sdk/lib-dynamodb";
+import { PutCommand, GetCommand,UpdateCommand } from "@aws-sdk/lib-dynamodb";
 import dynamoDBClient from "./DynamoClient";
 
 export const addStartup = async (
@@ -62,4 +62,30 @@ export const getStartup = async (startupName) => {
     return null;
   }
 };
+export const updateStartupInvestment = async (startupName, additionalInvestment) => {
+  try {
+    const params = {
+      TableName: "Hacklytics",
+      Key: {
+        startupName: startupName, // Use startupName as the key per schema
+      },
+      UpdateExpression:
+        "SET totalInvested = if_not_exists(totalInvested, :start) + :inc, totalUsersInvesting = if_not_exists(totalUsersInvesting, :one) + :one",
+      ExpressionAttributeValues: {
+        ":inc": additionalInvestment,
+        ":start": 0,
+        ":one": 1,
+      },
+      ReturnValues: "UPDATED_NEW",
+    };
+    console.log(startupName + "STARTUPP");
 
+    const command = new UpdateCommand(params);
+    const response = await dynamoDBClient.send(command);
+    console.log("Updated startup investment:", response.Attributes);
+    return response.Attributes;
+  } catch (error) {
+    console.error("Error updating startup investment:", error);
+    throw error;
+  }
+};

@@ -97,7 +97,7 @@ const PitchStartupOverlay = ({ isOpen, onClose, onSuccess }) => {
             onChange={(e) => setStartupName(e.target.value)}
           />
 
-          <label>Bio*</label>
+          <label>Description*</label>
           <textarea
             value={bio}
             onChange={(e) => setBio(e.target.value)}
